@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace CodeScheduler.Logging
                 Console.Write(severity.ToString().ToUpper());
                 Console.ResetColor();
                 Console.WriteLine($"] {DateTime.Now} | {category} | {message.Replace("\n", "").Replace("\r", "")}");
+                Debug.WriteLine($"[{severity.ToString().ToUpper()}] {DateTime.Now} | {category} | {message.Replace("\n", "").Replace("\r", "")}");
             }
         }
 

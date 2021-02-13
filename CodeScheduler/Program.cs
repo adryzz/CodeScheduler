@@ -75,13 +75,13 @@ namespace CodeScheduler
             List<Plugin> plugins = new List<Plugin>();
 
             Logger.Log(LogSeverity.Info, "Main Executable", "Loading plugins...");
-            if (!Directory.Exists(PluginFolder))
+            if (!Directory.Exists(Utils.GetAbsolutePath(PluginFolder)))
             {
                 Logger.Log(LogSeverity.Warning, "Main Executable", "The plugin folder isn't present.");
                 Logger.Log(LogSeverity.Info, "Main Executable", "Creating new plugin folder...");
                 try
                 {
-                    Directory.CreateDirectory(PluginFolder);
+                    Directory.CreateDirectory(Utils.GetAbsolutePath(PluginFolder));
                     Logger.Log(LogSeverity.Info, "Main Executable", "Successfully created plugin directory.");
                 }
                 catch(Exception ex)
@@ -96,7 +96,7 @@ namespace CodeScheduler
             try
             {
                 //check for .json files
-                List<string> json = Directory.EnumerateFiles(PluginFolder, "*.json").ToList();
+                List<string> json = Directory.EnumerateFiles(Utils.GetAbsolutePath(PluginFolder), "*.json").ToList();
                 Logger.Log(LogSeverity.Info, "Main Executable", $"Found {json.Count} plugin(s).");
                 if (json.Count > 0)
                 {
@@ -107,7 +107,7 @@ namespace CodeScheduler
                         {
                             Logger.Log(LogSeverity.Warning, "Main Executable", $"Plugin {Path.GetFileName(s)} does not exist.");
                         }
-                        else if (!File.Exists(Path.Combine(PluginFolder, p.AssemblyName)))
+                        else if (!File.Exists(Utils.GetAbsolutePath(PluginFolder, p.AssemblyName)))
                         {
                             Logger.Log(LogSeverity.Warning, "Main Executable", $"Plugin {Path.GetFileName(s)} does not exist.");
                         }
