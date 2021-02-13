@@ -28,7 +28,7 @@ namespace CodeScheduler.Plugins
         {
             try
             {
-                p.Assembly = Assembly.Load(Utils.GetAbsolutePath(Program.PluginFolder, p.AssemblyName));
+                p.Assembly = Assembly.LoadFile(Utils.GetAbsolutePath(Program.PluginFolder, p.AssemblyName));
                 foreach(Type t in p.Assembly.GetExportedTypes())
                 {
                     if (t.IsAssignableFrom(typeof(IPlugin)))
@@ -46,6 +46,7 @@ namespace CodeScheduler.Plugins
                     return;
                 }
                 p.Instance = (IPlugin)Activator.CreateInstance(p.PluginType);
+                p.Loaded = true;
             }
             catch (Exception ex)
             {

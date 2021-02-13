@@ -12,7 +12,7 @@ namespace CodeScheduler
 {
     class Program
     {
-        public static string PluginFolder = "";
+        public static string PluginFolder = "Plugins";
         static PluginManager Manager = new PluginManager();
         static Configuration Config = new Configuration();
         static void Main(string[] args)
