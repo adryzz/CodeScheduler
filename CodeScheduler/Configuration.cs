@@ -1,12 +1,14 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json;
+using CodeScheduler.Logging;
 
 namespace CodeScheduler
 {
     public  class Configuration
     {
         public bool Debug = false;
+        public LogSeverity LogVerbosity = LogSeverity.Info;
 
         public void Save(string fileName)
         {

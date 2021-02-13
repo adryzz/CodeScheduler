@@ -67,6 +67,7 @@ namespace CodeScheduler
             {
                 Utils.CreateConsole();
             }
+            Logger.Verbosity = Config.LogVerbosity;
         }
 
         private static List<Plugin> EnumeratePlugins()

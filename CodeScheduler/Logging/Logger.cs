@@ -10,7 +10,7 @@ namespace CodeScheduler.Logging
     {
         static Logger _instance;
 
-        static LogSeverity Verbosity = LogSeverity.Debug;
+        public static LogSeverity Verbosity;
 
         string logPath;
 
