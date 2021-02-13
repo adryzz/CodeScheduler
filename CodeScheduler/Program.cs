@@ -12,7 +12,7 @@ namespace CodeScheduler
 {
     class Program
     {
-        public static string PluginFolder = "Plugins";
+        public static string PluginFolder = "";
         static PluginManager Manager = new PluginManager();
         static Configuration Config = new Configuration();
         static void Main(string[] args)
@@ -135,7 +135,7 @@ namespace CodeScheduler
                 if (p.Loaded)
                 {
                     Logger.Log(LogSeverity.Debug, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Initializing plugin...");
-
+                    p.Instance.Initialize();
                     Logger.Log(LogSeverity.Debug, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Plugin Initialized.");
                 }
             }

@@ -17,13 +17,9 @@ namespace CodeScheduler.Plugins
         [JsonIgnore()]
         public Type PluginType;
         [JsonIgnore()]
-        public MethodInfo Initializer;
-        [JsonIgnore()]
-        public MethodInfo OnEvent;
-        [JsonIgnore()]
-        public MethodInfo OnDispose;
-        [JsonIgnore()]
         public bool Loaded = false;
+
+        public IPlugin Instance;
     }
 
     public interface IPlugin : IDisposable

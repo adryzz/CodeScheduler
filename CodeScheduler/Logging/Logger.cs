@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeScheduler.Logging
 {
-    class Logger
+    public class Logger
     {
         static Logger _instance;
 

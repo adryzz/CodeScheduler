@@ -45,7 +45,7 @@ namespace CodeScheduler.Plugins
                     Logger.Log(LogSeverity.Error, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", $"No plugin code detected. The plugin will not get loaded.");
                     return;
                 }
-                //p.PluginType.
+                p.Instance = (IPlugin)Activator.CreateInstance(p.PluginType);
             }
             catch (Exception ex)
             {
