@@ -140,7 +140,7 @@ namespace CodeScheduler
         {
             foreach(Plugin p in Manager.Plugins)
             {
-                if (p.Loaded)
+                if (p.Loaded && p.Enabled)
                 {
                     Logger.Log(LogSeverity.Debug, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Initializing plugin...");
                     try
@@ -155,6 +155,10 @@ namespace CodeScheduler
                         Manager.ReloadPlugin(p);
                     }
                     Logger.Log(LogSeverity.Debug, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Plugin Initialized.");
+                }
+                else
+                {
+                    Logger.Log(LogSeverity.Info, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Plugin will not be loaded.");
                 }
             }
         }

@@ -62,20 +62,23 @@ namespace CodeScheduler.Plugins
             {
                 foreach (Plugin p in Plugins)
                 {
-                    new Thread(new ThreadStart(() => 
+                    if (p.Enabled)
                     {
-                        try
+                        new Thread(new ThreadStart(() =>
                         {
-                            p.Instance.OnEvent(type, data);
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger.Log(LogSeverity.Debug, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", $"Exception of type {ex.GetType()}: {ex.Message}");
-                            Logger.Log(LogSeverity.Trace, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", ex.StackTrace);
-                            Logger.Log(LogSeverity.Error, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", "Unhandled exception.");
-                            ReloadPlugin(p);
-                        }
-                    })).Start();
+                            try
+                            {
+                                p.Instance.OnEvent(type, data);
+                            }
+                            catch (Exception ex)
+                            {
+                                Logger.Log(LogSeverity.Debug, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", $"Exception of type {ex.GetType()}: {ex.Message}");
+                                Logger.Log(LogSeverity.Trace, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", ex.StackTrace);
+                                Logger.Log(LogSeverity.Error, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", "Unhandled exception.");
+                                ReloadPlugin(p);
+                            }
+                        })).Start();
+                    }
                 }
             }
             else
@@ -84,7 +87,10 @@ namespace CodeScheduler.Plugins
                 {
                     try
                     {
-                        p.Instance.OnEvent(type, data);
+                        if (p.Enabled)
+                        {
+                            p.Instance.OnEvent(type, data);
+                        }
                     }
                     catch (Exception ex)
                     {
