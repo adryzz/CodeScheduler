@@ -9,6 +9,7 @@ namespace CodeScheduler
     {
         public bool Debug = false;
         public LogSeverity LogVerbosity = LogSeverity.Info;
+        public bool RunEventsOnNewThread = false;
 
         public void Save(string fileName)
         {

@@ -31,7 +31,8 @@ namespace CodeScheduler.Plugins
 
     public enum EventType
     {
-
+        Startup,
+        Shutdown
     }
 
     /// <summary>

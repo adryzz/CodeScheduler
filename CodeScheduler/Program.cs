@@ -14,7 +14,8 @@ namespace CodeScheduler
     {
         public static string PluginFolder = "Plugins";
         static PluginManager Manager = new PluginManager();
-        static Configuration Config = new Configuration();
+        public static Configuration Config = new Configuration();
+        public static NotifyIcon Icon;
         static void Main(string[] args)
         {
             Logger.Initialize();
@@ -56,8 +57,13 @@ namespace CodeScheduler
             Manager.Plugins = EnumeratePlugins();
             Manager.LoadAllPlugins();
             InitializePlugins();
-            Logger.Log(LogSeverity.Debug, "Main Executable", "Registering events...");
-
+            Logger.Log(LogSeverity.Debug, "Main Executable", "Adding notification tray icon...");
+            Icon = new NotifyIcon();
+            Icon.Icon = System.Drawing.SystemIcons.Shield;
+            Icon.Visible = true;
+            Logger.Log(LogSeverity.Debug, "Main Executable", "Notification tray icon added.");
+            Application.EnableVisualStyles();
+            Logger.Log(LogSeverity.Debug, "Main Executable", "Starting message loop.");
             Application.Run();
         }
 

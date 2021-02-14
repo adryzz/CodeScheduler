@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Reflection;
 using CodeScheduler.Logging;
 using System.IO;
@@ -53,6 +53,24 @@ namespace CodeScheduler.Plugins
                 Logger.Log(LogSeverity.Debug, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", $"Exception of type {ex.GetType()}: {ex.Message}");
                 Logger.Log(LogSeverity.Trace, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", ex.StackTrace);
                 Logger.Log(LogSeverity.Error, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Could not load plugin.");
+            }
+        }
+
+        public void Event(EventType type, EventData data)
+        {
+            if (Program.Config.RunEventsOnNewThread)
+            {
+                foreach (Plugin p in Plugins)
+                {
+                    new Thread(new ThreadStart(() => p.Instance.OnEvent(type, data))).Start();
+                }
+            }
+            else
+            {
+                foreach(Plugin p in Plugins)
+                {
+                    p.Instance.OnEvent(type, data);
+                }
             }
         }
     }
