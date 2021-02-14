@@ -62,14 +62,37 @@ namespace CodeScheduler.Plugins
             {
                 foreach (Plugin p in Plugins)
                 {
-                    new Thread(new ThreadStart(() => p.Instance.OnEvent(type, data))).Start();
+                    new Thread(new ThreadStart(() => 
+                    {
+                        try
+                        {
+                            p.Instance.OnEvent(type, data);
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log(LogSeverity.Debug, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", $"Exception of type {ex.GetType()}: {ex.Message}");
+                            Logger.Log(LogSeverity.Trace, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", ex.StackTrace);
+                            Logger.Log(LogSeverity.Error, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", "Unhandled exception.");
+                            ReloadPlugin(p);
+                        }
+                    })).Start();
                 }
             }
             else
             {
                 foreach(Plugin p in Plugins)
                 {
-                    p.Instance.OnEvent(type, data);
+                    try
+                    {
+                        p.Instance.OnEvent(type, data);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Log(LogSeverity.Debug, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", $"Exception of type {ex.GetType()}: {ex.Message}");
+                        Logger.Log(LogSeverity.Trace, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", ex.StackTrace);
+                        Logger.Log(LogSeverity.Error, $"Plugin [{Path.GetFileName(p.AssemblyName)}]", "Unhandled exception.");
+                        ReloadPlugin(p);
+                    }
                 }
             }
         }
