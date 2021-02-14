@@ -50,5 +50,10 @@
       <Name>CodeScheduler</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="CodeSchedulerTestPlugin.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
