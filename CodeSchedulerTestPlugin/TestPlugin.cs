@@ -22,7 +22,7 @@ namespace CodeSchedulerTestPlugin
 
         public void OnEvent(EventType type, EventData data)
         {
-            
+            Logger.Log(LogSeverity.Info, "Test Plugin", "Event fired, indeed");
         }
     }
 }

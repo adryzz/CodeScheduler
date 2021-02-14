@@ -9,16 +9,7 @@ namespace CodeScheduler.Logging
 {
     public class Logger
     {
-        static Logger _instance;
-
         public static LogSeverity Verbosity;
-
-        string logPath;
-
-        public static void Initialize()
-        {
-
-        }
 
         public static void Log(LogSeverity severity, string category, string message)
         {

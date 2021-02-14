@@ -77,7 +77,7 @@ namespace CodeScheduler
 
         public static bool IsPluginType(Type type)
         {
-            return !type.IsAbstract && !type.IsInterface &&
+            return (!type.IsAbstract) && (!type.IsInterface) &&
                 typeof(IPlugin).IsAssignableFrom(type) ||
                     type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IPlugin));
         }
