@@ -57,9 +57,10 @@ namespace CodeScheduler
             Manager.Plugins = EnumeratePlugins();
             Manager.LoadAllPlugins();
             InitializePlugins();
+            Logger.Log(LogSeverity.Info, "Main Executable", "Plugins loaded and initialized.");
             Logger.Log(LogSeverity.Debug, "Main Executable", "Adding notification tray icon...");
             Icon = new NotifyIcon();
-            Icon.Icon = System.Drawing.SystemIcons.Shield;
+            Icon.Icon = System.Drawing.SystemIcons.Shield;//TODO: add proper icon settings
             Icon.Visible = true;
             Logger.Log(LogSeverity.Debug, "Main Executable", "Notification tray icon added.");
             Application.EnableVisualStyles();
