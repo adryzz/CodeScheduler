@@ -18,6 +18,7 @@ namespace CodeSchedulerTestPlugin
         public void Initialize()
         {
             Logger.Log(LogSeverity.Info, "Test Plugin", "Initialized, indeed");
+            throw new Exception("Exception smh");
         }
 
         public void OnEvent(EventType type, EventData data)

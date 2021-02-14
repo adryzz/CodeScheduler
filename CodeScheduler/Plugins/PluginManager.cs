@@ -91,7 +91,7 @@ namespace CodeScheduler.Plugins
                 Logger.Log(LogSeverity.Error, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Could not load plugin.");
 
                 p.UnhandledExceptions++;
-                if (Program.Config.RestartOnUnhandledException && p.UnhandledExceptions >= Program.Config.MaxUnhandledExceptions)
+                if (Program.Config.RestartOnUnhandledException && p.UnhandledExceptions < Program.Config.MaxUnhandledExceptions)
                 {
                     ReloadPlugin(p);
                 }
