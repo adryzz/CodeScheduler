@@ -10,8 +10,12 @@ namespace CodeScheduler.Logging
     public class Logger
     {
         public static LogSeverity Verbosity;
+
+        public static List<LogData> LoggedData = new List<LogData>();
+
         public static void Log(LogSeverity severity, string category, string message)
         {
+            LoggedData.Add(new LogData { Severity = severity, Category = category, Message = message, Time = DateTime.Now });
             if ((int)Verbosity <= (int)severity)//log to console only if verbosity is lower or equal
             {
                 Console.Write("[");
@@ -67,5 +71,13 @@ namespace CodeScheduler.Logging
         Warning,
         Error,
         Fatal
+    }
+
+    public struct LogData
+    {
+        public LogSeverity Severity;
+        public string Category;
+        public DateTime Time;
+        public string Message;
     }
 }

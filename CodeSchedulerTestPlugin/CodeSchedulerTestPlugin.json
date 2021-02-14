@@ -1,7 +1,14 @@
 ﻿{
   "AssemblyName": "CodeSchedulerTestPlugin.dll",
   "AssemblyDescription": "A basic test plugin",
-  "AssemblyVersion": "1.0.0.0",
+  "AssemblyVersion": {
+    "Major": 1,
+    "Minor": 0,
+    "Build": -1,
+    "Revision": -1,
+    "MajorRevision": -1,
+    "MinorRevision": -1
+  },
   "AssemblyRepositoryURL": "https://github.com/adryzz/CodeScheduler",
   "AssemblyWikiURL": "https://github.com/adryzz/CodeScheduler/wiki",
   "AssemblyLicense": "GNU GPL v3",

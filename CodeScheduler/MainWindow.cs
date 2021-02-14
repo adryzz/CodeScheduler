@@ -14,6 +14,7 @@ namespace CodeScheduler
 {
     public partial class MainWindow : Form
     {
+        LogSeverity LocalVerbosity;
         public MainWindow()
         {
             InitializeComponent();
@@ -25,6 +26,8 @@ namespace CodeScheduler
             {
                 listBox1.Items.Add(p.AssemblyName);
             }
+            comboBox1.SelectedIndex = (int)Logger.Verbosity;
+            LocalVerbosity = Logger.Verbosity;
             if (listBox1.Items.Count > 0)
             {
                 listBox1.SelectedIndex = 0;
@@ -35,6 +38,7 @@ namespace CodeScheduler
                 groupBox1.Visible = false;
             }
             listBox1_SelectedIndexChanged(sender, e);
+            ReloadLog();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -46,7 +50,7 @@ namespace CodeScheduler
             }
             Plugin selected = Program.Manager.Plugins[listBox1.SelectedIndex];
 
-            label1.Text = $"Name: {selected.AssemblyName}\n\nDescription: {selected.AssemblyDescription}\n\nLicense: {selected.AssemblyLicense}\n\nLoaded: {selected.Loaded}";
+            label1.Text = $"Name: {selected.AssemblyName}\n\nDescription: {selected.AssemblyDescription}\n\nVersion: {selected.AssemblyVersion}\n\nLicense: {selected.AssemblyLicense}\n\nLoaded: {selected.Loaded}";
 
             button1.Enabled = !string.IsNullOrEmpty(selected.ConfigName);
 
@@ -97,7 +101,22 @@ namespace CodeScheduler
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Logger.Verbosity = (LogSeverity)comboBox1.SelectedIndex;
+            LocalVerbosity = (LogSeverity)comboBox1.SelectedIndex;
+            ReloadLog();
+        }
+
+        void ReloadLog()
+        {
+            listView1.SuspendLayout();
+            listView1.Items.Clear();
+            foreach(LogData d in Logger.LoggedData)
+            {
+                if ((int)d.Severity >= (int)LocalVerbosity)
+                {
+                    listView1.Items.Add(new ListViewItem(new string[] { d.Severity.ToString(), d.Time.ToString(), d.Category, d.Message }));
+                }
+            }
+            listView1.ResumeLayout();
         }
     }
 }
