@@ -60,7 +60,8 @@ namespace CodeScheduler
             Logger.Log(LogSeverity.Info, "Main Executable", "Plugins loaded and initialized.");
             Logger.Log(LogSeverity.Debug, "Main Executable", "Adding notification tray icon...");
             Icon = new NotifyIcon();
-            Icon.Icon = System.Drawing.SystemIcons.Shield;//TODO: add proper icon settings
+            Icon.Icon = Resources.Icon;
+            Icon.Text = "CodeScheduler";
             Icon.Visible = true;
             Logger.Log(LogSeverity.Debug, "Main Executable", "Notification tray icon added.");
             Application.EnableVisualStyles();
@@ -142,7 +143,17 @@ namespace CodeScheduler
                 if (p.Loaded)
                 {
                     Logger.Log(LogSeverity.Debug, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Initializing plugin...");
-                    p.Instance.Initialize();
+                    try
+                    {
+                        p.Instance.Initialize();
+                    }
+                    catch(Exception ex)
+                    {
+                        Logger.Log(LogSeverity.Debug, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", $"Exception of type {ex.GetType()}: {ex.Message}");
+                        Logger.Log(LogSeverity.Trace, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", ex.StackTrace);
+                        Logger.Log(LogSeverity.Error, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Could not load plugin.");
+                        Manager.ReloadPlugin(p);
+                    }
                     Logger.Log(LogSeverity.Debug, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Plugin Initialized.");
                 }
             }

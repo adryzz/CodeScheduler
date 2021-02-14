@@ -18,7 +18,10 @@ namespace CodeScheduler.Plugins
         public Type PluginType;
         [JsonIgnore()]
         public bool Loaded = false;
+        [JsonIgnore()]
+        public int UnhandledExceptions = 0;
 
+        [JsonIgnore()]
         public IPlugin Instance;
     }
 

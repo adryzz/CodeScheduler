@@ -10,6 +10,8 @@ namespace CodeScheduler
         public bool Debug = false;
         public LogSeverity LogVerbosity = LogSeverity.Info;
         public bool RunEventsOnNewThread = false;
+        public bool RestartOnUnhandledException = false;
+        public int MaxUnhandledExceptions = 4;
 
         public void Save(string fileName)
         {

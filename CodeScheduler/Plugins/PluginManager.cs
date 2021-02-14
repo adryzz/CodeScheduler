@@ -73,5 +73,35 @@ namespace CodeScheduler.Plugins
                 }
             }
         }
+
+        public void ReloadPlugin(Plugin p)
+        {
+            Logger.Log(LogSeverity.Info, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Reloading plugin...");
+            p.Instance.Dispose();
+            p.Instance = null;
+            p.Instance = (IPlugin)Activator.CreateInstance(p.PluginType);
+            try
+            {
+                p.Instance.Initialize();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogSeverity.Debug, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", $"Exception of type {ex.GetType()}: {ex.Message}");
+                Logger.Log(LogSeverity.Trace, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", ex.StackTrace);
+                Logger.Log(LogSeverity.Error, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "Could not load plugin.");
+
+                p.UnhandledExceptions++;
+                if (Program.Config.RestartOnUnhandledException && p.UnhandledExceptions >= Program.Config.MaxUnhandledExceptions)
+                {
+                    ReloadPlugin(p);
+                }
+                else
+                {
+                    Logger.Log(LogSeverity.Warning, $"PluginLoader [{Path.GetFileName(p.AssemblyName)}]", "The plugin will not be loaded.");
+                    p.Instance.Dispose();
+                    p.Loaded = false;
+                }
+            }
+        }
     }
 }
