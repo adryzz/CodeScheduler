@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeScheduler.Plugins;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -72,6 +73,13 @@ namespace CodeScheduler
                         return Path.GetFullPath(Path.Combine(args));
                     }
             }
+        }
+
+        public static bool IsPluginType(Type type)
+        {
+            return !type.IsAbstract && !type.IsInterface &&
+                typeof(IPlugin).IsAssignableFrom(type) ||
+                    type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IPlugin));
         }
     }
 }
