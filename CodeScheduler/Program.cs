@@ -18,7 +18,6 @@ namespace CodeScheduler
         public static NotifyIcon Icon;
         static void Main(string[] args)
         {
-            Logger.Initialize();
             Logger.Log(LogSeverity.Info, "Main Executable", "Application Started");
             Logger.Log(LogSeverity.Debug, "Main Executable", "Loading configuration...");
             if (File.Exists("config.json"))
