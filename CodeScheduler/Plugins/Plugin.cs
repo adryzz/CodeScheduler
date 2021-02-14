@@ -8,8 +8,12 @@ namespace CodeScheduler.Plugins
     public class Plugin
     {
         public string AssemblyName = "";
+        public string AssemblyDescription = "";
         public Version AssemblyVersion = new Version();
         public string AssemblyRepositoryURL = "";
+        public string AssemblyWikiURL = "";
+        public string AssemblyLicense = "";
+        public string ConfigName = "";
         public bool Enabled = true;
 
         [JsonIgnore()]
