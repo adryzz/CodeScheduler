@@ -24,9 +24,13 @@ namespace CodeScheduler.Plugins
         public bool Loaded = false;
         [JsonIgnore()]
         public int UnhandledExceptions = 0;
-
         [JsonIgnore()]
         public IPlugin Instance;
+
+        public void Save()
+        {
+            System.IO.File.WriteAllText(Utils.GetAbsolutePath(Program.PluginFolder, ConfigName), JsonConvert.SerializeObject(this, Formatting.Indented));
+        }
     }
 
     public interface IPlugin : IDisposable

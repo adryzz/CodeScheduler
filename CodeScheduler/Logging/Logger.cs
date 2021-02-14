@@ -10,7 +10,6 @@ namespace CodeScheduler.Logging
     public class Logger
     {
         public static LogSeverity Verbosity;
-
         public static void Log(LogSeverity severity, string category, string message)
         {
             if ((int)Verbosity <= (int)severity)//log to console only if verbosity is lower or equal

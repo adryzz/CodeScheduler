@@ -14,15 +14,15 @@ namespace CodeScheduler
     {
         //***** PROGRAM *****//
         public static string PluginFolder = "Plugins";
-        static PluginManager Manager = new PluginManager();
-        public static Configuration Config = new Configuration();
+        public static PluginManager Manager { get; protected set; } = new PluginManager();
+        public static Configuration Config { get; protected set; } = new Configuration();
         //***** UI *****//
         public static NotifyIcon Icon;
         public static ContextMenuStrip SubMenu;
         public static ToolStripMenuItem MainItem;
         public static ToolStripMenuItem ExitItem;
         //***** WINDOW *****//
-        public static MainWindow Window;
+        protected static MainWindow Window;
         static void Main(string[] args)
         {
             Logger.Log(LogSeverity.Info, "Main Executable", "Application Started");
@@ -65,6 +65,8 @@ namespace CodeScheduler
             InitializePlugins();
             Logger.Log(LogSeverity.Info, "Main Executable", "Plugins loaded and initialized.");
             Logger.Log(LogSeverity.Debug, "Main Executable", "Adding notification tray icon...");
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             Icon = new NotifyIcon();
             Icon.Icon = Resources.Icon;
             Icon.Text = "CodeScheduler";
@@ -77,7 +79,6 @@ namespace CodeScheduler
             MainItem.Click += MainItem_Click;
             ExitItem.Click += ExitItem_Click;
             Logger.Log(LogSeverity.Debug, "Main Executable", "Notification tray icon added.");
-            Application.EnableVisualStyles();
             Logger.Log(LogSeverity.Debug, "Main Executable", "Starting message loop.");
             Application.Run();
         }
