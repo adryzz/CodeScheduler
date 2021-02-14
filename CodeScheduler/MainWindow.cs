@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace CodeScheduler
 {
-    public partial class SettingsWindow : Form
+    public partial class MainWindow : Form
     {
-        public SettingsWindow()
+        public MainWindow()
         {
             InitializeComponent();
         }

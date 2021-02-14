@@ -12,10 +12,17 @@ namespace CodeScheduler
 {
     class Program
     {
+        //***** PROGRAM *****//
         public static string PluginFolder = "Plugins";
         static PluginManager Manager = new PluginManager();
         public static Configuration Config = new Configuration();
+        //***** UI *****//
         public static NotifyIcon Icon;
+        public static ContextMenuStrip SubMenu;
+        public static ToolStripMenuItem MainItem;
+        public static ToolStripMenuItem ExitItem;
+        //***** WINDOW *****//
+        public static MainWindow Window;
         static void Main(string[] args)
         {
             Logger.Log(LogSeverity.Info, "Main Executable", "Application Started");
@@ -62,10 +69,47 @@ namespace CodeScheduler
             Icon.Icon = Resources.Icon;
             Icon.Text = "CodeScheduler";
             Icon.Visible = true;
+            SubMenu = new ContextMenuStrip();
+            MainItem = new ToolStripMenuItem("Main Window");
+            ExitItem = new ToolStripMenuItem("Exit");
+            SubMenu.Items.AddRange(new ToolStripMenuItem[] { MainItem, ExitItem });
+            Icon.ContextMenuStrip = SubMenu;
+            MainItem.Click += MainItem_Click;
+            ExitItem.Click += ExitItem_Click;
             Logger.Log(LogSeverity.Debug, "Main Executable", "Notification tray icon added.");
             Application.EnableVisualStyles();
             Logger.Log(LogSeverity.Debug, "Main Executable", "Starting message loop.");
             Application.Run();
+        }
+
+        private static void MainItem_Click(object sender, EventArgs e)
+        {
+            if (Window == null)
+            {
+                Window = new MainWindow();
+                Window.Show();
+            }
+            else if (!Window.Visible && !Window.IsDisposed)
+            {
+                Window.Show();
+            }
+            else
+            {
+                Window = new MainWindow();
+                Window.Show();
+            }
+        }
+
+        private static void ExitItem_Click(object sender, EventArgs e)
+        {
+            foreach(Plugin p in Manager.Plugins)
+            {
+                if (p.Loaded && p.Enabled)
+                {
+                    p.Instance.Dispose();
+                }
+            }
+            Application.Exit();
         }
 
         private static void ProcessConfiguration()
