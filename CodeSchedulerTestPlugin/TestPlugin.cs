@@ -18,7 +18,6 @@ namespace CodeSchedulerTestPlugin
         public void Initialize()
         {
             Logger.Log(LogSeverity.Info, "Test Plugin", "Initialized, indeed");
-            
         }
 
         public void OnEvent(EventType type, EventData data)
