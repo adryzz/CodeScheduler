@@ -83,6 +83,15 @@ namespace CodeScheduler
         private void button2_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Not Implemented yet", "CodeScheduler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+            if (Program.Manager.Plugins[listBox1.SelectedIndex].AssemblyRepositoryURL.Contains("github.com"))
+            {
+
+            }
+            else
+            {
+                System.Diagnostics.Process.Start(Program.Manager.Plugins[listBox1.SelectedIndex].AssemblyRepositoryURL);
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)

@@ -47,9 +47,9 @@ namespace CodeScheduler.Plugins
     }
 
     /// <summary>
-    /// A class that defines data for an event. Useful for reflection.
+    /// A struct that defines data for an event. Useful for reflection.
     /// </summary>
-    public class EventData
+    public struct EventData
     {
         public Type DataType;
         public object Data;
